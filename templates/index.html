@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Translator</title>
+</head>
+<body>
+    <h1>Speech Translator</h1>
+    
+    <form action="/translate" method="POST">
+        <label for="input_language">Enter the language you want to speak in:</label>
+        <select id="input_language" name="input_language">
+            {% for code, name in languages.items() %}
+                <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="output_language">Enter the language you want to convert to:</label>
+        <select id="output_language" name="output_language">
+            {% for code, name in languages.items() %}
+                <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Translate</button>
+    </form>
+
+    {% if translated_text %}
+        <h2>Translated Text:</h2>
+        <p>{{ translated_text }}</p>
+        <audio controls>
+            <source src="{{ url_for('static', filename='hello.mp3') }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
